@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from commerce.models import Cart, CartItem
 
 
 class IsAdminorReadonly(permissions.BasePermission):
@@ -13,5 +14,12 @@ class IsAdminorReadonly(permissions.BasePermission):
 class IsCart(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
-        return obj.user == request.user
+        if isinstance(obj, Cart):
+            return obj.user == request.user
+
+        if isinstance(obj, CartItem):
+            return obj.cart.user == request.user
+
+        return False
+
         
