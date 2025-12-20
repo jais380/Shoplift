@@ -11,6 +11,19 @@ from commerce.api.permissions import IsAdminorReadonly, IsCart
 from commerce.api.pagination import ProductPagination, ChartItemPagination
 
 
+class PendingCartAV(generics.RetrieveAPIView):
+    serializer_class = CartSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        cart = Cart.objects.filter(user=self.request.user, status='PENDING').first()
+
+        if not cart:
+            raise ValidationError("No pending cart exists")
+
+        return cart
+
+
 class CartItemAV(generics.ListCreateAPIView):
 
     serializer_class = CartItemSerializer
@@ -53,7 +66,7 @@ class CartItemAV(generics.ListCreateAPIView):
 class CartItemDetailAV(generics.RetrieveUpdateDestroyAPIView):
 
     serializer_class = CartItemSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsCart]
 
     def get_cart(self):
         return get_object_or_404(

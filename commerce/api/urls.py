@@ -11,4 +11,5 @@ urlpatterns = [
     path('cart/<int:pk>/', views.CartDetailAV.as_view(), name='cart-detail'),
     path('cart/<int:pk>/items/', views.CartItemAV.as_view(), name='item-list'),
     path('cart/item/<int:pk>/', views.CartItemDetailAV.as_view(), name='item-list'),
+    path('carts/pending/', views.PendingCartAV.as_view(), name="pending-cart"),
 ]
