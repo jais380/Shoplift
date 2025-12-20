@@ -30,10 +30,11 @@ class CartItemAV(generics.ListCreateAPIView):
         return CartItem.objects.filter(cart=cart)
 
     def perform_create(self, serializer):
-        try:
-            cart = Cart.objects.get(user=self.request.user, status='PENDING')
-        except Cart.DoesNotExist:
-            raise ValidationError("No pending cart exists. Please create a cart first.")
+        cart = self.get_cart()
+
+        if cart.status != 'PENDING':
+            raise ValidationError("You can only add items to a pending cart.")
+
         product = serializer.validated_data["product"]
 
 
