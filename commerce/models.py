@@ -59,6 +59,10 @@ class Cart(models.Model):
             for item in self.items.all()
         )
     
+    @property
+    def items_count(self):
+        return self.items.count()
+    
 
     def __str__(self):
         return f"{self.user.username} - {self.status}"

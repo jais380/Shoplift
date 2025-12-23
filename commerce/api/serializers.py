@@ -25,11 +25,12 @@ class CartSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username', read_only=True)
     total_price = serializers.ReadOnlyField()
     status = serializers.ReadOnlyField()
+    items_count = serializers.ReadOnlyField
 
     class Meta:
 
         model = Cart 
-        fields = ['id', 'user', 'items', 'total_price', 'status', 'created']
+        fields = ['id', 'user', 'items', 'total_price', 'status', 'items_count', 'created']
 
 
 class ProductSerializer(serializers.ModelSerializer):
