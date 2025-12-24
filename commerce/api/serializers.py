@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from commerce.models import Cart, Product, CartItem
 
+from drf_spectacular.utils import extend_schema_field
+
 
 class CartItemSerializer(serializers.ModelSerializer):
 
@@ -24,14 +26,27 @@ class CartSerializer(serializers.ModelSerializer):
 
     items = CartItemSerializer(many=True, read_only=True)
     user = serializers.CharField(source='user.username', read_only=True)
-    total_price = serializers.ReadOnlyField()
     status = serializers.ReadOnlyField()
-    items_count = serializers.ReadOnlyField
+
+    # Use SerializerMethodField for read-only computed fields
+    total_price = serializers.SerializerMethodField()
+    
+    items_count = serializers.SerializerMethodField()
+
 
     class Meta:
 
         model = Cart 
         fields = ['id', 'user', 'items', 'total_price', 'status', 'items_count', 'created']
+
+    # Methods to compute the properties with schema hints
+    @extend_schema_field(serializers.FloatField)
+    def get_total_price(self, obj):
+        return obj.total_price
+
+    @extend_schema_field(serializers.IntegerField)
+    def get_items_count(self, obj):
+        return obj.items_count
 
 
 class ProductSerializer(serializers.ModelSerializer):

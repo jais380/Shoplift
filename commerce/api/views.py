@@ -4,6 +4,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework import generics, filters
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import extend_schema
 
 
 from commerce.api.serializers import ProductSerializer, CartSerializer, CartItemSerializer
@@ -109,11 +110,21 @@ class CartAV(generics.ListCreateAPIView):
 
     serializer_class = CartSerializer
 
+    @extend_schema(
+        responses=CartSerializer(many=True),
+    )
     def get_queryset(self):
+        # avoid AnonymousUser errors when generating schema
+        if getattr(self, 'swagger_fake_view', False):
+            return Cart.objects.all()
         # Makes sure only one query each is sent to the database to fetch cart items and associated products in bulk
         return Cart.objects.filter(user=self.request.user).prefetch_related('items__product')
 
     
+    @extend_schema(
+        request=CartSerializer,
+        responses=CartSerializer,
+    )
     def perform_create(self, serializer):
 
         # Raises error if pending cart already exists for the user.

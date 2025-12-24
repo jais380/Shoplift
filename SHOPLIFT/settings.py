@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'commerce',
     'django_filters',
     'account',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,13 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Run this in terminal to create the file - python manage.py spectacular --file schema.yml
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Django DRF Shoplift"
+}

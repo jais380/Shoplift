@@ -1,11 +1,15 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from drf_spectacular.utils import extend_schema
 
 from account.api.serializers import RegistrationSerializers
 
 
-
+@extend_schema(
+    request=RegistrationSerializers,
+    responses=RegistrationSerializers,
+)
 @api_view(['POST',])
 def Register(request):
 
