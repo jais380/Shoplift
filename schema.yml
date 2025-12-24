@@ -75,8 +75,7 @@ paths:
               $ref: '#/components/schemas/RegistrationSerializers'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -97,8 +96,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -128,8 +126,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Cart'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -159,8 +156,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCart'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -179,8 +175,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '204':
           description: No response body
@@ -202,8 +197,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -234,8 +228,7 @@ paths:
               $ref: '#/components/schemas/CartItem'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '201':
           content:
@@ -255,8 +248,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -287,8 +279,7 @@ paths:
               $ref: '#/components/schemas/CartItem'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -318,8 +309,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCartItem'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -338,8 +328,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '204':
           description: No response body
@@ -349,8 +338,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -377,8 +365,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -404,8 +391,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Cart'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '201':
           content:
@@ -437,8 +423,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -459,8 +444,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -491,8 +475,7 @@ paths:
               $ref: '#/components/schemas/Product'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -522,8 +505,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedProduct'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -542,8 +524,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '204':
           description: No response body
@@ -566,8 +547,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -592,8 +572,7 @@ paths:
               $ref: '#/components/schemas/Product'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       responses:
         '201':
           content:
@@ -725,8 +704,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -1052,10 +1030,7 @@ components:
       - access
       - refresh
   securitySchemes:
-    basicAuth:
+    jwtAuth:
       type: http
-      scheme: basic
-    cookieAuth:
-      type: apiKey
-      in: cookie
-      name: sessionid
+      scheme: bearer
+      bearerFormat: JWT
