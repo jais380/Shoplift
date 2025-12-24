@@ -73,7 +73,7 @@ This project is designed as a backend-only service, ready to be consumed by a fr
 
 - git clone https://github.com/jais380/Shoplift.git
 
-- cd shoplift
+- cd Shoplift
 
 2️⃣ Create a virtual environment
 
