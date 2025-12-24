@@ -13,6 +13,7 @@ class CartItemSerializer(serializers.ModelSerializer):
         model = CartItem
         fields = ['id', 'product', 'product_name', 'product_price', 'quantity']
 
+    # To ensure that the quantity is not less than 1
     def validate_quantity(self, value):
         if value < 1:
             raise serializers.ValidationError("Quantity must be at least 1.")

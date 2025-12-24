@@ -42,6 +42,7 @@ class Cart(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="PENDING")
     created = models.DateTimeField(auto_now_add=True)
 
+    # Adds constaints metadata to limit one pending cart per user
     class Meta:
         ordering = ["-created"]
         constraints = [
@@ -52,6 +53,7 @@ class Cart(models.Model):
             )
         ]
     
+    # Calculation for the total price of the items in a cart
     @property
     def total_price(self):
         return sum(
@@ -59,6 +61,7 @@ class Cart(models.Model):
             for item in self.items.all()
         )
     
+    # Number of items in a cart
     @property
     def items_count(self):
         return self.items.count()
@@ -74,6 +77,7 @@ class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     
+    # Adds constaints metadata to limit one product per cart
     class Meta:
         constraints = [
             models.UniqueConstraint(

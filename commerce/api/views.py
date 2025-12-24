@@ -17,6 +17,7 @@ class PendingCartAV(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
+        # Get or create pending cart
         cart, _ = Cart.objects.get_or_create(user=self.request.user, status='PENDING')
 
         return cart
@@ -31,6 +32,7 @@ class CartItemAV(generics.ListCreateAPIView):
     pagination_class = ChartItemPagination
 
     def get_cart(self):
+        # Ensure the cart belongs to the authenticated user
         return get_object_or_404(
             Cart,
             pk=self.kwargs['pk'],
@@ -39,13 +41,16 @@ class CartItemAV(generics.ListCreateAPIView):
 
     def get_queryset(self):
         cart = self.get_cart()
+        # Return only items belonging to this cart
         return CartItem.objects.filter(cart=cart)
 
-
+    
+    # To ensure this method fails if any database operation fails
     @transaction.atomic
     def perform_create(self, serializer):
         cart = self.get_cart()
 
+        # Raise error for any cart status other than pending
         if cart.status != 'PENDING':
             raise ValidationError("You can only add items to a pending cart.")
 
@@ -53,6 +58,7 @@ class CartItemAV(generics.ListCreateAPIView):
         quantity = serializer.validated_data.get("quantity", 1)
 
         try:
+            # Get or create cart item
             cart_item, created = CartItem.objects.get_or_create(
                 cart=cart,
                 product=product,
@@ -76,6 +82,7 @@ class CartItemDetailAV(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated, IsCart]
 
     def get_cart(self):
+        # Ensure the cart belongs to the authenticated user
         return get_object_or_404(
             Cart,
             pk=self.kwargs['pk'],
@@ -84,9 +91,11 @@ class CartItemDetailAV(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         cart = self.get_cart()
+        # Return only items belonging to this cart
         return CartItem.objects.filter(cart=cart)
     
     def perform_destroy(self, instance):
+        # Raises error if the cart is not a pending cart to prevent deletion of cart items
         if instance.cart.status != 'PENDING':
             raise ValidationError("Cannot delete items from this cart")
         instance.delete()
@@ -101,11 +110,13 @@ class CartAV(generics.ListCreateAPIView):
     serializer_class = CartSerializer
 
     def get_queryset(self):
+        # Makes sure only one query each is sent to the database to fetch cart items and associated products in bulk
         return Cart.objects.filter(user=self.request.user).prefetch_related('items__product')
 
     
     def perform_create(self, serializer):
 
+        # Raises error if pending cart already exists for the user.
         if Cart.objects.filter(user=self.request.user, status='PENDING').exists():
             raise ValidationError("Pending cart already exists")
 
@@ -123,6 +134,7 @@ class CartDetailAV(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CartSerializer
 
     def get_queryset(self):
+        # Makes sure only one query each is sent to the database to fetch cart items and associated products in bulk
         return Cart.objects.filter(user=self.request.user).prefetch_related('items__product')
         
 
@@ -138,8 +150,10 @@ class ProductCategoryAV(generics.ListAPIView):
     search_fields = ['name']
 
     def get_queryset(self):
+        # Filter products by category from the URL
         category = self.kwargs['categoryname']
 
+        # Perform a case-insensitive match on the category code
         return Product.objects.filter(category__iexact=category)
     
 
