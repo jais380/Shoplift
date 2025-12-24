@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import dj_database_url
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=1qm=x!8*+=s)f@z=d193qbt#njpu%ey5sn2+f-v3g_vx)a201'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -88,6 +93,15 @@ DATABASES = {
     }
 }
 
+#                                OR
+
+# To use install render database url- pip install dj-database-url
+
+database_url = os.environ.get("DATABASE_URL")
+DATABASES['default'] = dj_database_url.parse(database_url)
+
+# Then install postgres driver - pip install psycopg2-binary
+# Then makemigrations...
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
