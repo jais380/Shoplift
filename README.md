@@ -138,14 +138,14 @@ Refresh Token
 
 # 📦 Product Endpoints
 
-| Method    | Endpoint                    | Description            |
-| --------- | --------------------------- | ---------------------- |
-| GET       | `/api/products/`            | List products          |
-| POST      | `/api/products/`            | Create product (admin) |
-| GET       | `/api/product/<id>/`        | Retrieve product       |
-| PUT/PATCH | `/api/product/<id>/`        | Update product (admin) |
-| DELETE    | `/api/product/<id>/`        | Delete product (admin) |
-| GET       | `/api/<category>/products/` | Products by category   |
+| Method    | Endpoint                             | Description            |
+| --------- | ------------------------------------ | ---------------------- |
+| GET       | `/api/products/`                     | List products          |
+| POST      | `/api/products/`                     | Create product (admin) |
+| GET       | `/api/product/<id>/`                 | Retrieve product       |
+| PUT/PATCH | `/api/product/<id>/`                 | Update product (admin) |
+| DELETE    | `/api/product/<id>/`                 | Delete product (admin) |
+| GET       | `/api/category/<category>/products/` | Products by category   |
 
 # 🛒 Cart Endpoints
 
