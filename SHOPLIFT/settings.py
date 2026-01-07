@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 import dj_database_url
 import os
+from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -43,9 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framwork_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'commerce',
-    'django_filters',
     'account',
+    'django_filters',
     'drf_spectacular',
 ]
 
@@ -97,8 +100,8 @@ DATABASES = {
 
 # To use install render database url- pip install dj-database-url
 
-database_url = os.environ.get("DATABASE_URL")
-DATABASES['default'] = dj_database_url.parse(database_url)
+# database_url = os.environ.get("DATABASE_URL")
+# DATABASES['default'] = dj_database_url.parse(database_url)
 
 # Then install postgres driver - pip install psycopg2-binary
 # Then makemigrations...
@@ -149,6 +152,14 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
+}
+
+SIMPLE_JWT = {
+    "ROTATE_REFRESH_TOKENS": True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
 # Run this in terminal to create the file - python manage.py spectacular --file schema.yml
