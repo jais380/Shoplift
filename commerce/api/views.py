@@ -49,7 +49,10 @@ class CartItemAV(generics.ListCreateAPIView):
     # To ensure this method fails if any database operation fails
     @transaction.atomic
     def perform_create(self, serializer):
-        cart = self.get_cart()
+        cart = Cart.objects.select_for_update().get(
+            pk=self.kwargs.get('pk'),
+            user=self.request.user
+        )
 
         # Raise error for any cart status other than pending
         if cart.status != 'PENDING':
@@ -58,17 +61,12 @@ class CartItemAV(generics.ListCreateAPIView):
         product = serializer.validated_data["product"]
         quantity = serializer.validated_data.get("quantity", 1)
 
-        try:
-            # Get or create cart item
-            cart_item, created = CartItem.objects.get_or_create(
-                cart=cart,
-                product=product,
-                defaults={"quantity": quantity}
-            )
-        except IntegrityError:
-            # Incase someone else created it simultaneously, safely fetch and update
-            cart_item = CartItem.objects.select_for_update().get(cart=cart, product=product)
-            created = False
+        # Get or create cart item
+        cart_item, created = CartItem.objects.get_or_create(
+            cart=cart,
+            product=product,
+            defaults={"quantity": quantity}
+        )
 
         if not created:
             cart_item.quantity += quantity

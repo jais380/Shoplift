@@ -1,19 +1,52 @@
-from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError
 from drf_spectacular.utils import extend_schema
 
 from account.api.serializers import RegistrationSerializers
 
+class LogoutAPIView(APIView):
 
-@extend_schema(
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        refresh_token = request.data.get("refresh")
+
+        if not refresh_token:
+            return Response({
+                "error": "Refresh Token is required"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            token = RefreshToken(refresh_token)
+
+            if token['user_id'] != request.user.id:
+                return Response({
+                    "error": "Token does not belong to the user"
+                }, status=status.HTTP_403_FORBIDDEN)
+            
+            token.blacklist()
+
+            return Response({
+                "message": "Logout successful"
+            }, status=status.HTTP_205_RESET_CONTENT)
+        
+        except TokenError:
+            return Response({
+                "error": "Token is expired or invalid"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RegisterAPIView(APIView):
+
+    @extend_schema(
     request=RegistrationSerializers,
     responses=RegistrationSerializers,
-)
-@api_view(['POST',])
-def Register(request):
-
-    if request.method == 'POST':
+    )
+    def post(self, request):
         serializers = RegistrationSerializers(data=request.data)
 
         data = {}
@@ -31,7 +64,6 @@ def Register(request):
                 'access': str(refresh.access_token),
             }
 
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
         else:
-            data = serializers.errors
-        
-        return Response(data)
+            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
