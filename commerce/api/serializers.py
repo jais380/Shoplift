@@ -26,7 +26,6 @@ class CartSerializer(serializers.ModelSerializer):
 
     items = CartItemSerializer(many=True, read_only=True)
     user = serializers.CharField(source='user.username', read_only=True)
-    status = serializers.ReadOnlyField()
 
     # Use SerializerMethodField for read-only computed fields
     total_price = serializers.SerializerMethodField()
@@ -39,8 +38,15 @@ class CartSerializer(serializers.ModelSerializer):
         model = Cart 
         fields = ['id', 'user', 'items', 'total_price', 'status', 'items_count', 'created']
 
+    # To ensure no other status except the ones in choices can be patched into the cart
+    def validate_status(self, value):
+        if value not in [status for status, _ in Cart.STATUS_CHOICES]:
+            raise serializers.ValidationError("Invalid status")
+        return value
+
+
     # Methods to compute the properties with schema hints
-    @extend_schema_field(serializers.FloatField)
+    @extend_schema_field(serializers.DecimalField(max_digits=10, decimal_places=2))
     def get_total_price(self, obj):
         return obj.total_price
 
@@ -55,6 +61,12 @@ class ProductSerializer(serializers.ModelSerializer):
 
         model = Product
         fields = '__all__'
+
+    # To ensure no other category except the ones in choices can be patched into the product
+    def validate_category(self, value):
+        if value not in [category for category, _ in Product.CATEGORY_CHOICES]:
+            raise serializers.ValidationError("Invalid status")
+        return value
     
 
     
