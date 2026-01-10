@@ -24,15 +24,21 @@ class RegisterTests(APITestCase):
         self.assertIsInstance(response.data, dict)
 
 
+
+class LogoutTests(APITestCase):
+
+    def setUp(self):
+        
+        self.user = User.objects.create_user(username="jude", email="example159@example.com", password="password321#")
+        self.client.force_authenticate(user=self.user)
+    
+
     def test_logout(self):
         data = {
             "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2ODEzMzAyMCwiaWF0IjoxNzY4MDQ2NjIwLCJqdGkiOiI3ZTQ5N2FlYzYzOTU0ZDg4YmJiZGFlMDFiZmYwODg2ZSIsInVzZXJfaWQiOiIxIn0.009P__d4IcpQVBuX5WByC3L7_4Hg4oW8IIIsKL7VuFw"
         }
 
         url = reverse('logout')
-
-        self.user = User.objects.create_user(username="jude", email="example159@example.com", password="password321#")
-        self.client.force_authenticate(user=self.user)
 
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
