@@ -64,6 +64,6 @@ class RegisterAPIView(APIView):
                 'access': str(refresh.access_token),
             }
 
-            return Response(serializers.data, status=status.HTTP_201_CREATED)
+            return Response(data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
