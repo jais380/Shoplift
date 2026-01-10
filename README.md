@@ -5,6 +5,8 @@ It provides product management, user authentication with JWT, and a robust shopp
 
 This project is designed as a backend-only service, ready to be consumed by a frontend (React, HTMX, mobile app, etc.).
 
+LIVE API DOCS - https://shoplift-2o3r.onrender.com
+
 # 🚀 Features
 🔐 Authentication
 
@@ -45,6 +47,8 @@ This project is designed as a backend-only service, ready to be consumed by a fr
 - Transaction-safe cart operations
 
 🔒 Permissions & Safety
+
+- Implemented TDD best practices for endpoints
 
 - Read-only access for non-admins on products
 
@@ -135,6 +139,11 @@ Refresh Token
 
 
 `POST /account/api/token/refresh/`
+
+Logout
+
+
+`POST /account/logout/`
 
 # 📦 Product Endpoints
 
