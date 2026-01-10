@@ -79,6 +79,7 @@ class CartItem(models.Model):
     
     # Adds constaints metadata to limit one product per cart
     class Meta:
+        ordering = ["-created"]
         constraints = [
             models.UniqueConstraint(
                 fields=["cart", "product"],
