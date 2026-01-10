@@ -46,22 +46,24 @@ class CartItemAV(generics.ListCreateAPIView):
         return CartItem.objects.filter(cart=cart)
 
     
-    # To ensure this method fails if any database operation fails
+    # Ensure all database operations in this method are executed atomically
+    # (either all succeed or all fail)
     @transaction.atomic
     def perform_create(self, serializer):
+        # Lock the cart row to prevent race conditions during concurrent updates
         cart = Cart.objects.select_for_update().get(
             pk=self.kwargs.get('pk'),
             user=self.request.user
         )
 
-        # Raise error for any cart status other than pending
+        # Prevent adding items to non-pending carts
         if cart.status != 'PENDING':
             raise ValidationError("You can only add items to a pending cart.")
 
         product = serializer.validated_data["product"]
         quantity = serializer.validated_data.get("quantity", 1)
 
-        # Get or create cart item
+        # Create a new cart item or increment quantity if it already exists
         cart_item, created = CartItem.objects.get_or_create(
             cart=cart,
             product=product,
