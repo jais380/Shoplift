@@ -8,7 +8,6 @@ from drf_spectacular.utils import extend_schema
 
 from account.api.serializers import RegistrationSerializers
 
-@extend_schema(auth=['jwtAuth'])
 class LogoutAPIView(APIView):
 
     permission_classes = [IsAuthenticated]
@@ -41,7 +40,6 @@ class LogoutAPIView(APIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
 
-@extend_schema(auth=[])
 class RegisterAPIView(APIView):
     permission_classes = [AllowAny]
 
