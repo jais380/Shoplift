@@ -12,7 +12,7 @@ from commerce.models import Product, Cart, CartItem
 from commerce.api.permissions import IsAdminorReadonly, IsCart
 from commerce.api.pagination import ProductPagination, ChartItemPagination
 
-
+@extend_schema(auth=['jwtAuth'])
 class PendingCartAV(generics.RetrieveAPIView):
     serializer_class = CartSerializer
     permission_classes = [IsAuthenticated]
@@ -24,7 +24,7 @@ class PendingCartAV(generics.RetrieveAPIView):
         return cart
 
 
-
+@extend_schema(auth=['jwtAuth'])
 class CartItemAV(generics.ListCreateAPIView):
 
     serializer_class = CartItemSerializer
@@ -74,7 +74,7 @@ class CartItemAV(generics.ListCreateAPIView):
 
 
 
-
+@extend_schema(auth=['jwtAuth'])
 class CartItemDetailAV(generics.RetrieveUpdateDestroyAPIView):
 
     serializer_class = CartItemSerializer
@@ -95,7 +95,7 @@ class CartItemDetailAV(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-
+@extend_schema(auth=['jwtAuth'])
 class CartAV(generics.ListCreateAPIView):
 
     permission_classes = [IsAuthenticated]
@@ -132,7 +132,7 @@ class CartAV(generics.ListCreateAPIView):
     filterset_fields = ['status']
 
 
-
+@extend_schema(auth=['jwtAuth'])
 class CartDetailAV(generics.RetrieveUpdateDestroyAPIView):
 
     permission_classes = [IsAuthenticated, IsCart]
@@ -144,7 +144,7 @@ class CartDetailAV(generics.RetrieveUpdateDestroyAPIView):
         return Cart.objects.filter(user=self.request.user).prefetch_related('items__product')
         
 
-
+@extend_schema(auth=[])
 class ProductCategoryAV(generics.ListAPIView):
 
     permission_classes = [AllowAny]

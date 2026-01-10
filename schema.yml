@@ -63,7 +63,7 @@ paths:
       tags:
       - account
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '200':
           description: No response body
@@ -84,9 +84,6 @@ paths:
             schema:
               $ref: '#/components/schemas/RegistrationSerializers'
         required: true
-      security:
-      - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -106,7 +103,7 @@ paths:
       tags:
       - api
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '200':
           content:
@@ -136,7 +133,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Cart'
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '200':
           content:
@@ -166,7 +163,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCart'
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '200':
           content:
@@ -185,7 +182,7 @@ paths:
       tags:
       - api
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '204':
           description: No response body
@@ -207,7 +204,7 @@ paths:
       tags:
       - api
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '200':
           content:
@@ -238,7 +235,7 @@ paths:
               $ref: '#/components/schemas/CartItem'
         required: true
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '201':
           content:
@@ -258,7 +255,7 @@ paths:
       tags:
       - api
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '200':
           content:
@@ -289,7 +286,7 @@ paths:
               $ref: '#/components/schemas/CartItem'
         required: true
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '200':
           content:
@@ -319,7 +316,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCartItem'
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '200':
           content:
@@ -338,7 +335,7 @@ paths:
       tags:
       - api
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '204':
           description: No response body
@@ -348,7 +345,7 @@ paths:
       tags:
       - api
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '200':
           content:
@@ -375,7 +372,7 @@ paths:
       tags:
       - api
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '200':
           content:
@@ -401,7 +398,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Cart'
       security:
-      - jwtAuth: []
+      - jwtAuth
       responses:
         '201':
           content:
@@ -432,9 +429,6 @@ paths:
           type: string
       tags:
       - api
-      security:
-      - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
