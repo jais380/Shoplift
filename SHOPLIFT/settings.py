@@ -100,8 +100,8 @@ DATABASES = {
 
 # To use install render database url- pip install dj-database-url
 
-# database_url = os.environ.get("DATABASE_URL")
-# DATABASES['default'] = dj_database_url.parse(database_url)
+database_url = os.environ.get("DATABASE_URL")
+DATABASES['default'] = dj_database_url.parse(database_url)
 
 # Then install postgres driver - pip install psycopg2-binary
 # Then makemigrations...
