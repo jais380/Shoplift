@@ -164,5 +164,13 @@ SIMPLE_JWT = {
 
 # Run this in terminal to create the file - python manage.py spectacular --file schema.yml
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Django DRF Shoplift"
+    "TITLE": "Django DRF Shoplift",
+    "SECURITY": [],
+    "SECURITY_SCHEMES": {
+        "jwtAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT",
+        }
+    },
 }
