@@ -1,4 +1,4 @@
-# 🛒 SHOPLIFT – Django REST E-Commerce API
+# SHOPLIFT – Django REST E-Commerce API
 
 SHOPLIFT is a backend e-commerce REST API built with Django and Django Rest Framework (DRF).
 It provides product management, user authentication with JWT, and a robust shopping cart system with transactional safety and business rules enforced at the database level.
@@ -7,8 +7,8 @@ This project is designed as a backend-only service, ready to be consumed by a fr
 
 LIVE API DOCS - https://shoplift-2o3r.onrender.com
 
-# 🚀 Features
-🔐 Authentication
+# Features
+Authentication
 
 - User registration
 
@@ -16,7 +16,7 @@ LIVE API DOCS - https://shoplift-2o3r.onrender.com
 
 - Protected endpoints using IsAuthenticated
 
-📦 Products
+Products
 
 - Create, read, update, delete products (admin-only)
 
@@ -28,7 +28,7 @@ LIVE API DOCS - https://shoplift-2o3r.onrender.com
 
 - Pagination support
 
-🛍️ Cart System
+Cart System
 
 - One pending cart per user (enforced via database constraint)
 
@@ -46,7 +46,7 @@ LIVE API DOCS - https://shoplift-2o3r.onrender.com
 
 - Transaction-safe cart operations
 
-🔒 Permissions & Safety
+Permissions & Safety
 
 - Implemented TDD best practices for endpoints
 
@@ -58,7 +58,7 @@ LIVE API DOCS - https://shoplift-2o3r.onrender.com
 
 - Database-level uniqueness constraints
 
-# 🧱 Tech Stack
+# Tech Stack
 
 - Python
 
@@ -72,30 +72,31 @@ LIVE API DOCS - https://shoplift-2o3r.onrender.com
 
 - django-filters
 
-# ⚙️ Installation & Setup
-1️⃣ Clone the repository
+# Installation & Setup
+1️) Clone the repository
 
 - git clone https://github.com/jais380/Shoplift.git
 
 - cd Shoplift
 
-2️⃣ Create a virtual environment
+2️) Create a virtual environment
 
 
 - python -m venv venv
 
 - source venv/bin/activate  or  On Windows: venv\Scripts\activate
 
-3️⃣ Install dependencies
+3️) Install dependencies
 
 
 - pip install -r requirements.txt
 
-4️⃣ Configure PostgreSQL
+4️) Configure PostgreSQL
 
 Update your DATABASES settings in settings.py:
 
 
+```
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -106,24 +107,25 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+```
 
-5️⃣ Run migrations
+5️) Run migrations
 
 - python manage.py makemigrations
 
 - python manage.py migrate
 
-6️⃣ Create superuser
+6️) Create superuser
 
 
 - python manage.py createsuperuser
 
-7️⃣ Run the server
+7️) Run the server
 
 
 - python manage.py runserver
 
-# 🔑 Authentication Endpoints
+# Authentication Endpoints
 
 Register
 
@@ -145,7 +147,7 @@ Logout
 
 `POST /account/logout/`
 
-# 📦 Product Endpoints
+# Product Endpoints
 
 | Method    | Endpoint                             | Description            |
 | --------- | ------------------------------------ | ---------------------- |
@@ -172,7 +174,7 @@ Logout
 | DELETE | `/api/cart/item/<id>/`  | Remove item                |
 
 
-# 🧠 Business Rules
+# Business Rules
 
 - Only one pending cart per user
 
@@ -186,7 +188,7 @@ Logout
 
 - Cart operations are transaction-safe
 
-# 📌 Future Improvements
+# Future Improvements
 
 - Checkout & payment integration
 
@@ -200,12 +202,12 @@ Logout
 
 - Frontend integration (React / HTMX)
 
-# 👤 Author
+# Author
 
 Jude
 
 Backend Developer (Django / DRF)
 
-# 📜 License
+# License
 
 This project is open-source and available under the MIT License.
